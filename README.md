@@ -53,3 +53,8 @@ docker-compose up --build
 # В фоні
 docker-compose up -d --build
 ```
+
+Подвитись процесс роботи (логи)
+```
+docker-compose logs -f
+```

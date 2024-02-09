@@ -47,4 +47,4 @@ fi
 python /restart.py &
 
 # Run main program (mhddos)
-exec ./mhddos_proxy_linux --lang ${MHDDOS_LANG:-en} --copies ${MHDDOS_COPIES:-auto} --t ${MHDDOS_THREADS:-4000} --user-id $IT_ARMY_USER_ID
+exec ./mhddos_proxy_linux --lang ${MHDDOS_LANG:-en} --copies ${MHDDOS_COPIES:-auto} --t ${MHDDOS_THREADS:-4000} --use-my-ip ${MHDDOS_USE_IP_PERCENTAGE:-5} --user-id $IT_ARMY_USER_ID
