@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  mhddos:
+    container_name: mhddos
+    build:
+      context: .
+      dockerfile: Dockerfile
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+      - net.ipv4.ip_local_port_range=16384 65535
+    image: mhddos_trashbin
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    env_file:
+      - .env
+    volumes:
+      - ./openvpn/:/openvpn
