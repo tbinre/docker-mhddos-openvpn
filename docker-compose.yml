@@ -3,14 +3,19 @@ version: '3'
 services:
   mhddos:
     container_name: mhddos
+    image: mhddos_trashbin
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=1
       - net.ipv4.ip_local_port_range=16384 65535
-    image: mhddos_trashbin
-    restart: always
     cap_add:
       - NET_ADMIN
     devices:
