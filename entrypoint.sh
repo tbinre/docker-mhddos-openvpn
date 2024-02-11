@@ -31,7 +31,12 @@ fi
 echo "nameserver 1.1.1.1 1.0.0.1" > /etc/resolv.conf
 
 # Start OpenVPN
-/usr/sbin/openvpn --config $random_file --auth-user-pass <(echo -e "${VPN_USER}\n${VPN_PASSWORD}") &
+/usr/sbin/openvpn --config $random_file \
+    --auth-user-pass <(echo -e "${VPN_USER}\n${VPN_PASSWORD}") \
+    --auth-nocache \
+    --pull-filter ignore "ifconfig-ipv6" \
+    --pull-filter ignore "route-ipv6" \
+    &
 
 open_vpn_pid=$!
 sleep 4
