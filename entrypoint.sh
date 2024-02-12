@@ -83,6 +83,9 @@ if [ -z "$DISABLE_VPN" ] || [ "$DISABLE_VPN" = "false" ] || [ "$DISABLE_VPN" = "
     else
         echo "Initial IP $external_ip_without_vpn has changed to $external_ip_with_vpn"
     fi
+
+    # Start watchdog to restart container in case if VPN connection stops working and external IP became to original
+    python3 /ip_address_watchdog.py $external_ip_without_vpn &
 else
     echo "====================================="
     echo "-------------- WARNING --------------"
@@ -92,7 +95,7 @@ else
 fi
 
 # Run restart script
-python /restart.py &
+python3 /restart.py &
 
 # Run main program (mhddos)
 exec ./mhddos_proxy_linux \
