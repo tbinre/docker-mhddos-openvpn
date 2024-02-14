@@ -1,13 +1,13 @@
 #!/bin/bash
 
 HOST_HOSTNAME=$(hostname)
+ENV_FILE=".env"
 
-if grep -qxF "BASE_HOSTNAME=$HOST_HOSTNAME" .env; then
-  # If the line already exists, update the value
-  sed -i '' "s|^BASE_HOSTNAME=.*|BASE_HOSTNAME=$HOST_HOSTNAME|" .env
+if grep -qE '^BASE_HOSTNAME=' "$ENV_FILE"; then
+  sed -i.bak "s|^BASE_HOSTNAME=.*$|BASE_HOSTNAME=$HOST_HOSTNAME|" "$ENV_FILE"
+  rm $ENV_FILE.bak
 else
-  # If the line does not exist, add it
-  echo "BASE_HOSTNAME=$HOST_HOSTNAME" >> .env
+  echo "BASE_HOSTNAME=$HOST_HOSTNAME" >> "$ENV_FILE"
 fi
 
 # Now run your Docker Compose command
