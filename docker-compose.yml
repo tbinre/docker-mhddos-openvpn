@@ -3,6 +3,7 @@ version: '3'
 services:
   mhddos:
     container_name: mhddos
+    hostname: mhddos-${BASE_HOSTNAME}
     image: mhddos_trashbin
     restart: always
     build:
