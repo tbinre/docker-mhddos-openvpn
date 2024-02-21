@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install --no-install-recommends --yes \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 VOLUME [ "/openvpn" ]
+VOLUME [ "/tmp" ]
 
 COPY restart.py /restart.py
 COPY ip_address_watchdog.py /ip_address_watchdog.py

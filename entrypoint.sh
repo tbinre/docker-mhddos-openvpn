@@ -8,6 +8,9 @@ if [ -v VPN_USER ] || [ -v VPN_PASSWORD ]; then
     exit 1
 fi
 
+# Cleanup /tmp
+rm -rf /tmp/*
+
 # Set Cloudflare DNS
 echo "nameserver 1.1.1.1 1.0.0.1" > /etc/resolv.conf
 
