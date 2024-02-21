@@ -60,6 +60,7 @@ if [ -z "$DISABLE_VPN" ] || [ "$DISABLE_VPN" = "false" ] || [ "$DISABLE_VPN" = "
     fi
 
     # Start OpenVPN
+    cd $ovpn_file_dir
     /usr/sbin/openvpn --config $random_file \
         --auth-user-pass $ovpn_file_dir/auth.txt \
         --auth-nocache \
@@ -68,7 +69,7 @@ if [ -z "$DISABLE_VPN" ] || [ "$DISABLE_VPN" = "false" ] || [ "$DISABLE_VPN" = "
         &
 
     open_vpn_pid=$!
-    sleep 5
+    sleep 10
 
     # Check is OpenVPN running
     if ps -p $open_vpn_pid > /dev/null; then
@@ -104,7 +105,7 @@ fi
 python3 /restart.py &
 
 # Run main program (mhddos)
-exec ./mhddos_proxy_linux \
+exec /mhddos_proxy/mhddos_proxy_linux \
     --bind $MHDDOS_BIND_IP_ADDRESS \
     --lang ${MHDDOS_LANG:-en} \
     --copies ${MHDDOS_COPIES:-auto} \
