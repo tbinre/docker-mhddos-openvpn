@@ -107,7 +107,7 @@ fi
 python3 /restart.py &
 
 # Run main program (mhddos)
-exec /mhddos_proxy/mhddos_proxy_linux \
+exec /usr/bin/mhworker \
     --ifaces $MHDDOS_BIND_IFACE \
     --lang ${MHDDOS_LANG:-en} \
     --copies ${MHDDOS_COPIES:-auto} \
