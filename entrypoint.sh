@@ -88,7 +88,8 @@ if [ -z "$DISABLE_VPN" ] || [ "$DISABLE_VPN" = "false" ] || [ "$DISABLE_VPN" = "
         echo "Initial IP $external_ip_without_vpn has changed to $external_ip_with_vpn"
     fi
 
-    MHDDOS_BIND_IP_ADDRESS=$(ip addr show tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+    # MHDDOS_BIND_IP_ADDRESS=$(ip addr show tun0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+    MHDDOS_BIND_IFACE=tun0
 
     # Start watchdog to restart container in case if VPN connection stops working and external IP became to original
     python3 /ip_address_watchdog.py $external_ip_without_vpn &
@@ -98,7 +99,8 @@ else
     echo "VPN IS DISABLED BY DISABLE_VPN OPTION"
     echo "====================================="
     DEFAULT_MHDDOS_USE_IP_PERCENTAGE=0
-    MHDDOS_BIND_IP_ADDRESS=$(ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+    # MHDDOS_BIND_IP_ADDRESS=$(ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+    MHDDOS_BIND_IFACE=eth0
 fi
 
 # Run restart script
@@ -106,7 +108,7 @@ python3 /restart.py &
 
 # Run main program (mhddos)
 exec /mhddos_proxy/mhddos_proxy_linux \
-    --bind $MHDDOS_BIND_IP_ADDRESS \
+    --ifaces $MHDDOS_BIND_IFACE \
     --lang ${MHDDOS_LANG:-en} \
     --copies ${MHDDOS_COPIES:-auto} \
     --t ${MHDDOS_THREADS:-4000} \
